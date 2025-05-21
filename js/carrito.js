@@ -1,15 +1,16 @@
-
 let cartStorage = localStorage.getItem("cartProducts");
 cartStorage = JSON.parse(cartStorage) || [];
 
 let cartContainer = document.getElementById("cart-section");
-let vaciarCarritoButton = document.getElementById("vaciar-carrito");
 
 
-let comprarCarritoButton = document.createElement("button");
+const comprarCarritoButton = document.createElement("button");
 comprarCarritoButton.textContent = "Comprar";
-document.body.insertBefore(comprarCarritoButton, cartContainer.nextSibling);
+comprarCarritoButton.className = "btn";
 
+const vaciarCarritoButton = document.createElement("button");
+vaciarCarritoButton.textContent = "Vaciar Carrito";
+vaciarCarritoButton.className = "btn";
 
 function renderCarrito(cartItems) {
     cartContainer.innerHTML = ""; 
@@ -17,22 +18,30 @@ function renderCarrito(cartItems) {
 
     cartItems.forEach(producto => {
         const cart = document.createElement("div");
+        cart.classList.add("producto-carrito");
         cart.innerHTML = `
             <h3>${producto.nombre}</h3>
             <p>Precio: $${producto.precio}</p>
-            <p>Cantidad: ${producto.cantidad}</p>
-        `;
-        cartContainer.appendChild(cart);
+            <p>Cantidad: ${producto.cantidad}</p>`;
+        
+            cartContainer.appendChild(cart);
 
         total += producto.precio * producto.cantidad;
     });
 
-    
-    const totalDiv = document.createElement("div");
-    totalDiv.innerHTML = `<h2>Total: $${total}</h2>`;
-    cartContainer.appendChild(totalDiv);
-}
+    const totalContainer = document.createElement("div");
+    totalContainer.classList.add("total-container");
 
+    const totalText = document.createElement("h2");
+    totalText.textContent = `Total: $${total}`;
+    totalText.classList.add("total-text");
+
+    totalContainer.appendChild(totalText);
+    totalContainer.appendChild(comprarCarritoButton);
+    totalContainer.appendChild(vaciarCarritoButton);
+
+    cartContainer.appendChild(totalContainer);
+}
 
 vaciarCarritoButton.addEventListener("click", () => {
     if (cartStorage.length === 0) {
@@ -59,15 +68,10 @@ vaciarCarritoButton.addEventListener("click", () => {
             cartStorage = [];
             renderCarrito(cartStorage);
 
-            Swal.fire(
-                '¡Carrito vaciado!',
-                '',
-                'success'
-            );
+            Swal.fire('¡Carrito vaciado!', '', 'success');
         }
     });
 });
-
 
 comprarCarritoButton.addEventListener("click", () => {
     if (cartStorage.length === 0) {
@@ -102,6 +106,5 @@ comprarCarritoButton.addEventListener("click", () => {
         }
     });
 });
-
 
 renderCarrito(cartStorage);

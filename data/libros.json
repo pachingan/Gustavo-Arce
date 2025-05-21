@@ -1,0 +1,7 @@
+[
+  { "id": 1, "nombre": "1984", "precio": 5000 },
+  { "id": 2, "nombre": "Toma el control de tu vida", "precio": 8000 },
+  { "id": 3, "nombre": "El poder del ahora", "precio": 7000 },
+  { "id": 4, "nombre": "Padre rico, padre pobre", "precio": 6000 },
+  { "id": 5, "nombre": "48 Leyes de poder", "precio": 9000 }
+]
